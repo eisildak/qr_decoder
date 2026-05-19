@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>QR Kod Okuyucu</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+
+  <header>
+    <h1>📷 QR Kod Okuyucu</h1>
+    <p class="subtitle">Kamera ile gerçek zamanlı QR / Barkod okuma</p>
+  </header>
+
+  <main>
+
+    <!-- ── Kamera alanı ── -->
+    <section class="camera-section">
+      <div class="video-wrapper">
+        <video id="video" autoplay playsinline muted></video>
+        <canvas id="overlay"></canvas>         <!-- Tespit kutularını çizer -->
+        <div id="scan-line"></div>
+      </div>
+
+      <div class="controls">
+        <button id="btnStart" class="btn btn-primary">▶ Kamerayı Aç</button>
+        <button id="btnStop"  class="btn btn-secondary" disabled>⏹ Durdur</button>
+        <select id="cameraSelect" title="Kamera seçin"></select>
+      </div>
+
+      <!-- Mobil arka / ön kamera değiştirme -->
+      <div class="controls mobile-only">
+        <button id="btnFlip" class="btn btn-outline">🔄 Kamera Değiştir</button>
+      </div>
+    </section>
+
+    <!-- ── Anlık sonuçlar ── -->
+    <section class="results-section">
+      <div class="section-header">
+        <h2>Tespit Edilenler</h2>
+        <span id="badge" class="badge">0</span>
+      </div>
+      <ul id="resultList" class="result-list">
+        <li class="empty-hint">QR kod taratın…</li>
+      </ul>
+    </section>
+
+    <!-- ── Geçmiş / Dışa Aktar ── -->
+    <section class="history-section">
+      <div class="section-header">
+        <h2>Kaydedilen Kodlar</h2>
+        <div class="export-btns">
+          <a href="/api/export/csv" class="btn btn-sm">⬇ CSV</a>
+          <a href="/api/export/txt" class="btn btn-sm">⬇ TXT</a>
+          <button id="btnHistory" class="btn btn-sm btn-outline">🔄 Güncelle</button>
+        </div>
+      </div>
+      <div id="historyTable" class="table-wrapper">
+        <p class="empty-hint">Henüz kayıt yok.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>İleri Programlama Dersi – Python + OpenCV Final Projesi</p>
+  </footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

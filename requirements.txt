@@ -1,0 +1,8 @@
+# QR Kod Okuyucu – Bağımlılıklar
+# Kurulum: pip install -r requirements.txt
+
+opencv-python>=4.9.0
+pyzbar>=0.1.9
+flask>=3.0.0
+pyopenssl>=24.0.0
+cryptography>=42.0.0

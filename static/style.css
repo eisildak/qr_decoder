@@ -1,0 +1,241 @@
+/* ── Reset & Değişkenler ─────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #0f1117;
+  --surface:   #1a1d27;
+  --border:    #2a2d3e;
+  --primary:   #4f8ef7;
+  --success:   #22c55e;
+  --danger:    #ef4444;
+  --text:      #e2e8f0;
+  --muted:     #64748b;
+  --radius:    12px;
+  --shadow:    0 4px 24px rgba(0,0,0,.4);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  font-size: 15px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Header ─────────────────────────────────────── */
+header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 18px 24px;
+  text-align: center;
+}
+header h1 { font-size: 1.6rem; letter-spacing: -.5px; }
+.subtitle  { color: var(--muted); font-size: .85rem; margin-top: 4px; }
+
+/* ── Ana içerik ──────────────────────────────────── */
+main {
+  flex: 1;
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ── Kamera bölümü ───────────────────────────────── */
+.camera-section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: var(--shadow);
+}
+
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/3;
+  background: #000;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+#video, #overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#overlay { pointer-events: none; }
+
+/* Tarama animasyonu */
+#scan-line {
+  position: absolute;
+  left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--primary), transparent);
+  animation: scan 2.5s linear infinite;
+  opacity: .7;
+}
+@keyframes scan { from { top: 0 } to { top: 100% } }
+
+/* Kontroller */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+  align-items: center;
+}
+
+select#cameraSelect {
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: .85rem;
+  flex: 1;
+  min-width: 140px;
+}
+
+/* ── Butonlar ────────────────────────────────────── */
+.btn {
+  padding: 9px 18px;
+  border: none;
+  border-radius: 8px;
+  font-size: .9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity .15s, transform .1s;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn:active  { transform: scale(.96); }
+.btn:disabled { opacity: .4; cursor: not-allowed; }
+
+.btn-primary   { background: var(--primary); color: #fff; }
+.btn-secondary { background: var(--danger);  color: #fff; }
+.btn-outline   { background: transparent; border: 1px solid var(--border); color: var(--text); }
+.btn-sm        { padding: 6px 12px; font-size: .8rem; }
+
+/* ── Sonuç listesi ───────────────────────────────── */
+.results-section,
+.history-section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: var(--shadow);
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  gap: 10px;
+}
+.section-header h2 { font-size: 1rem; font-weight: 700; }
+
+.badge {
+  background: var(--primary);
+  color: #fff;
+  border-radius: 999px;
+  padding: 2px 10px;
+  font-size: .8rem;
+  font-weight: 700;
+}
+
+.result-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.result-item {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--success);
+  border-radius: 8px;
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  animation: fadeIn .25s ease;
+}
+.result-item .data {
+  font-weight: 600;
+  font-size: .95rem;
+  word-break: break-all;
+}
+.result-item .data a {
+  color: var(--primary);
+  text-decoration: underline;
+}
+.result-item .meta {
+  color: var(--muted);
+  font-size: .78rem;
+}
+
+@keyframes fadeIn { from { opacity:0; transform: translateY(-6px) } to { opacity:1; transform: none } }
+
+/* ── Geçmiş tablosu ──────────────────────────────── */
+.export-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.table-wrapper { overflow-x: auto; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .85rem;
+}
+thead th {
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+  color: var(--muted);
+  font-weight: 600;
+}
+tbody td {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+  word-break: break-all;
+}
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover { background: rgba(255,255,255,.03); }
+
+/* ── Boş durum ───────────────────────────────────── */
+.empty-hint { color: var(--muted); font-size: .88rem; padding: 8px 0; }
+
+/* ── Footer ──────────────────────────────────────── */
+footer {
+  text-align: center;
+  padding: 14px;
+  font-size: .8rem;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+}
+
+/* ── Mobil optimizasyonlar ───────────────────────── */
+@media (max-width: 600px) {
+  header h1 { font-size: 1.3rem; }
+  .video-wrapper { aspect-ratio: 3/4; }     /* Dikey ekran daha iyi */
+  .btn { padding: 10px 14px; font-size: .88rem; }
+}
+
+/* Masaüstünde gizle */
+@media (min-width: 601px) {
+  .mobile-only { display: none; }
+}
