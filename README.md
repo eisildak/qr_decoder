@@ -1,13 +1,22 @@
-# 📷 QR Kod Okuyucu
+# QR Kod Okuyucu
 
-> **İleri Programlama Dersi — Final Projesi**
-> Python + OpenCV kullanarak gerçek zamanlı QR kod okuma uygulaması.
+**İleri Programlama Dersi — Final Projesi**
 
 ---
 
-## 📌 Proje Hakkında
+## Proje Bilgileri
 
-Bu proje, **Python** ve **OpenCV** kütüphanesi kullanılarak geliştirilmiş çok platformlu bir QR kod okuyucudur. Kamera görüntüsünden gerçek zamanlı olarak QR kodları tespit eder, içeriklerini çözümler ve ekranda gösterir. Aynı anda birden fazla QR kod okunabilir ve sonuçlar dosyaya kaydedilebilir.
+| Alan | Bilgi |
+|---|---|
+| **Proje Konusu** | Gerçek Zamanlı QR Kod Okuyucu |
+| **Kullanılan Teknolojiler** | Python, OpenCV, pyzbar, Flask, HTML5/JS |
+| **Geliştirici** | Erol Işıldak |
+
+---
+
+## Projenin Kısa Açıklaması
+
+Bu proje, **Python** ve **OpenCV** kütüphanesi kullanılarak geliştirilmiş çok platformlu bir QR kod okuyucudur. Kamera görüntüsünden gerçek zamanlı olarak QR kodları tespit eder, içeriklerini çözümler ve ekranda gösterir. Aynı anda birden fazla QR kod okunabilir ve sonuçlar CSV/TXT dosyasına kaydedilebilir.
 
 Proje iki farklı mod ile çalışmaktadır:
 - **Web Modu** — Flask tabanlı sunucu üzerinden tarayıcıda çalışır (masaüstü ve mobil)
@@ -15,27 +24,9 @@ Proje iki farklı mod ile çalışmaktadır:
 
 ---
 
-## 🎯 Gereksinimler ve Kazanımlar
-
-| Gereksinim | Açıklama | Durum |
-|---|---|---|
-| Kamera ile QR tespiti | OpenCV + pyzbar ile gerçek zamanlı tespit | ✅ |
-| İçerik çözümleme | URL, metin, vCard vb. tüm QR içerikleri | ✅ |
-| Çoklu QR okuma | Aynı karede birden fazla QR kod desteği | ✅ |
-| Dosyaya kayıt | CSV ve TXT formatında otomatik kayıt | ✅ |
-| Web arayüzü | Flask + HTML5 responsive tasarım | ✅ |
-| Mobil uyumluluk | Telefon tarayıcısından erişim | ✅ |
-
-**Kazanımlar:**
-- Görüntüden veri çıkarımı (image processing)
-- Kod çözme (decoding) işlemleri
-- Gerçek zamanlı analiz
-- Flask ile REST API geliştirme
-- Web/mobil entegrasyon
-
 ---
 
-## 🗂️ Proje Yapısı
+## Proje Yapısı
 
 ```
 qr_reader/
@@ -61,7 +52,7 @@ qr_reader/
 
 ---
 
-## ⚙️ Kurulum
+## Kurulum ve Çalıştırma (Adım Adım)
 
 ### 1. Gerekli sistem kütüphanesi (macOS)
 ```bash
@@ -89,9 +80,58 @@ chmod +x run.sh
 
 ---
 
-## 🚀 Kullanım
+## Gerekli Kütüphaneler ve Versiyon Bilgileri
 
-### 🌐 Web Modu
+Bağımlılıkları kurmak için:
+
+```bash
+pip install -r requirements.txt
+```
+
+### requirements.txt
+
+```
+opencv-python>=4.9.0
+pyzbar>=0.1.9
+flask>=3.0.0
+pyopenssl>=24.0.0
+cryptography>=42.0.0
+```
+
+### Kullanılan Kütüphaneler
+
+| Kütüphane | Minimum Versiyon | Amaç |
+|---|---|---|
+| Python | 3.9+ | Ana programlama dili |
+| opencv-python | 4.9.0 | Kamera akışı ve görüntü işleme |
+| pyzbar | 0.1.9 | QR kod / barkod çözümleme motoru |
+| Flask | 3.0.0 | Web sunucusu ve REST API |
+| pyOpenSSL | 24.0.0 | HTTPS / self-signed sertifika |
+| cryptography | 42.0.0 | pyOpenSSL bağımlılığı |
+| zbar *(sistem)* | — | pyzbar'ın bağımlı olduğu C kütüphanesi (`brew install zbar`) |
+
+---
+
+## Veritabanı Kurulumu ve Bağlantı Ayarları
+
+Bu projede harici bir veritabanı kullanılmamaktadır. Veriler yerel dosya sistemine aşağıdaki formatlarda kaydedilir:
+
+- `logs/qr_log_YYYYMMDD.csv` — CSV formatı
+- `logs/qr_log_YYYYMMDD.txt` — Düz metin formatı
+
+`logs/` klasörü uygulama ilk çalıştırıldığında otomatik olarak oluşturulur.
+
+---
+
+## Örnek Kullanıcı Bilgileri (Giriş)
+
+Bu projede kullanıcı girişi (login) sistemi bulunmamaktadır. Uygulama herhangi bir kimlik doğrulaması gerektirmeden çalışır.
+
+---
+
+## Kullanım
+
+### Web Modu
 
 ```bash
 ./run.sh web
@@ -113,7 +153,7 @@ Sunucu başladıktan sonra:
 - Geçmiş tablosu
 - CSV ve TXT olarak dışa aktarma
 
-### 🖥️ Masaüstü Modu
+### Masaüstü Modu
 
 ```bash
 ./run.sh desktop
@@ -126,7 +166,7 @@ Sunucu başladıktan sonra:
 
 ---
 
-## 🔌 API Endpoint'leri
+## API Endpoint'leri
 
 | Method | Endpoint | Açıklama |
 |---|---|---|
@@ -160,7 +200,7 @@ POST /api/decode
 
 ---
 
-## 📁 Kayıt Formatları
+## Kayıt Formatları
 
 ### CSV (`logs/qr_log_YYYYMMDD.csv`)
 ```
@@ -179,21 +219,22 @@ timestamp,type,data,session_id
 
 ---
 
-## 🛠️ Kullanılan Teknolojiler
+## Kullanılan Teknolojiler
 
 | Teknoloji | Versiyon | Amaç |
 |---|---|---|
 | Python | 3.9+ | Ana programlama dili |
-| OpenCV (`opencv-python`) | 4.9+ | Kamera akışı ve görüntü işleme |
+| OpenCV (`opencv-python`) | 4.9.0+ | Kamera akışı ve görüntü işleme |
 | pyzbar | 0.1.9+ | QR / barkod çözümleme motoru |
-| Flask | 3.0+ | Web sunucusu ve REST API |
-| pyOpenSSL | 24.0+ | HTTPS / self-signed sertifika |
+| Flask | 3.0.0+ | Web sunucusu ve REST API |
+| pyOpenSSL | 24.0.0+ | HTTPS / self-signed sertifika |
+| cryptography | 42.0.0+ | pyOpenSSL bağımlılığı |
 | HTML5 / JavaScript | — | Web arayüzü ve kamera erişimi |
 | zbar (sistem) | — | pyzbar'ın bağımlı olduğu C kütüphanesi |
 
 ---
 
-## 🏗️ Mimari
+## Mimari
 
 ```
 Tarayıcı (Mobil / Web)
@@ -223,7 +264,7 @@ JSON yanıt → Tarayıcıya gönder → Ekranda göster
 
 ---
 
-## 📋 Geliştirme Notları
+## Geliştirme Notları
 
 - `QRDetector.detect_image()` statik metod olduğu için hem Flask API hem masaüstü modu aynı çekirdek kodu kullanır.
 - `scale` parametresi düşük güçlü cihazlarda frame küçülterek performansı artırır (örn. `--scale 0.5`).
@@ -232,8 +273,7 @@ JSON yanıt → Tarayıcıya gönder → Ekranda göster
 
 ---
 
-## 👤 Geliştirici
+## Geliştirici
 
 **Erol Işıldak**
 İleri Programlama Dersi — Final Projesi
-# qr_decoder
